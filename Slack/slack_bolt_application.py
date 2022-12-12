@@ -9,7 +9,6 @@ import requests
 from dotenv import load_dotenv # 環境變數
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
-from jobs.terminate_web_job import login_with_selenium
 
 from jobs.tool_man_jobs import Secret_Jobs
 from jobs.monitor_jobs import Monitor_Jobs
