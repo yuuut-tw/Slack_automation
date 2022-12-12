@@ -1,11 +1,10 @@
 
-
-
 import time
-from optparse import Option
 import os
 import requests
 from dotenv import load_dotenv # 環境變數
+
+from random import randint
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -15,23 +14,27 @@ from selenium.webdriver.common.by import By
 class Secret_Jobs():
 
     def __init__(self):
-       pass 
-       
-    # Selenium
-    def terminate_job_with_selenium(url, login_data):
+        self.credential_path = 'D:/yuting_repo/Slack_automation/data/.env'
+        self.chrome_path = 'D:/yuting_repo/Slack_automation/data/chromedriver'
+        
+        
+    # get enviroment varibles 
+    def __get_env_variables(self):
+        load_dotenv(self.credential_path)
+    
 
-        # credential data
-        url = 'xxx'
-        credential_path = 'xxx'
+    # Selenium
+    def terminate_job_with_selenium(self):
 
         ## get credential data
-        load_dotenv(credential_path)
+        self.__get_env_variables()
         login_data = {'user':os.environ['web_user'], 'pwd':os.environ['web_pwd']}
+        url = os.environ['web_url']
 
         chrome_options = Options()
         chrome_options.add_argument("--headless") ## headless mode: opening without browser
         
-        chrome_path = 'D:/yuting_repo/Slack_automation/data/chromedriver'
+        chrome_path = self.chrome_path
         driver = webdriver.Chrome(chrome_path,
                                   options=chrome_options)
         
@@ -52,4 +55,43 @@ class Secret_Jobs():
 
         driver.close()
 
+
+    @staticmethod
+    def random_sec():
+        sec = randint(3, 10)
+        return sec
+
+
+    # Selenium
+    def Punch_Time_Clock(self, mode):
+
+        ## get credential data
+        self.__get_env_variables()
+        login_data = {'user':os.environ['HR_user'], 'pwd':os.environ['HR_pwd']}
+        url = os.environ['HR_url']
+
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        chrome_path = self.chrome_path 
+        driver = webdriver.Chrome(chrome_path,
+                                  options=chrome_options)
+        
+        driver.get(url)
+
+        # login     
+        driver.find_element('id', "user_username").send_keys(login_data['user'])
+        time.sleep(self.random_sec())
+        driver.find_element('id', "user_passwd").send_keys(login_data['pwd'])
+        time.sleep(self.random_sec())
+        driver.find_element('xpath', '//*[@id="s_buttom"]/div').click() # 登入button
+        time.sleep(self.random_sec())
+        
+        if mode == "check-in":
+            driver.find_element('xpath', '//*[@id="clock_listing"]/table/tbody/tr[1]/td[1]/div').click() # 上班!
+        else:
+            driver.find_element('xpath', '//*[@id="clock_listing"]/table/tbody/tr[2]/td[1]/div').click() # 下班!
+
+        print('881')
+
+        driver.close()
 
