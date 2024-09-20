@@ -87,9 +87,9 @@ class Secret_Jobs():
         time.sleep(self.random_sec())
         
         if mode == "check-in":
-            driver.find_element('xpath', '//*[@id="clock_listing"]/table/tbody/tr[1]/td[1]/div').click() # 上班!
+            driver.find_element('xpath', '//*[@id="submit1948070738"]').click() # 上班!
         else:
-            driver.find_element('xpath', '//*[@id="clock_listing"]/table/tbody/tr[2]/td[1]/div').click() # 下班!
+            driver.find_element('xpath', '//*[@id="submit298093894"]').click() # 下班!
 
         print('881')
 

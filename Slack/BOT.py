@@ -36,10 +36,10 @@ if __name__ == '__main__':
 
 
     ## main
-    for _ in range(20):
+    for _ in range(10):
         
         # slack
-        env_path = './data/.env'
+        env_path = 'D:/yuting_repo/Slack_automation/data/.env' #'./data/.env'
         load_dotenv(env_path)
         token = os.environ['slack_token']
         # slack_client = slack.WebClient(token)
@@ -63,5 +63,5 @@ if __name__ == '__main__':
     
         print('Screenshot sent!')
       
-        time.sleep(300)
+        time.sleep(500)
 
